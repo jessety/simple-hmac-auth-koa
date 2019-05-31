@@ -1,0 +1,21 @@
+{
+  "name": "simple-hmac-auth-koa",
+  "version": "1.0.0",
+  "description": "Koa middleware that implements simple-hmac-auth",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "node ./node_modules/eslint/bin/eslint.js ."
+  },
+  "author": "Jesse T Youngblood",
+  "license": "MIT",
+  "devDependencies": {
+    "@jessety/eslint-config": "^1.0.4",
+    "eslint": "^5.16.0"
+  },
+  "dependencies": {
+    "koa-bodyparser": "^4.2.1",
+    "koa-compose": "^4.1.0",
+    "simple-hmac-auth": "^2.0.0"
+  }
+}
