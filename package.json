@@ -16,6 +16,6 @@
   "dependencies": {
     "koa-bodyparser": "^4.2.1",
     "koa-compose": "^4.1.0",
-    "simple-hmac-auth": "^2.0.0"
+    "simple-hmac-auth": "^2.2.0"
   }
 }
