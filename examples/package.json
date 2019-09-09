@@ -1,0 +1,12 @@
+{
+  "name": "simple-hmac-auth-koa-examples",
+  "private": true,
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {},
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0"
+  }
+}
