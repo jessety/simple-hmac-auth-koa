@@ -11,7 +11,7 @@ const logger = require('koa-logger');
 const Router = require('koa-router');
 
 // const auth = require('simple-hmac-auth-koa');
-const auth = require('../index.js');
+const auth = require('../src/index.js');
 
 const settings = {
   port: 8000,
@@ -47,6 +47,8 @@ app.use(auth({
 
   // This is required
   secretForKey: apiKey => {
+
+    console.log(apiKey);
 
     return new Promise((resolve, reject) => {
 

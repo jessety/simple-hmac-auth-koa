@@ -8,8 +8,9 @@
 
 const Koa = require('koa');
 const Router = require('koa-router');
+
 // const auth = require('simple-hmac-auth-koa');
-const auth = require('../index.js');
+const auth = require('../src/index.js');
 
 const app = new Koa();
 
