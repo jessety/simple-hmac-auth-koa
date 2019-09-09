@@ -7,8 +7,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "node ./node_modules/eslint/bin/eslint.js ."
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jessety/simple-hmac-auth-koa.git"
+  },
   "author": "Jesse T Youngblood",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jessety/simple-hmac-auth-koa/issues"
+  },
+  "homepage": "https://github.com/jessety/simple-hmac-auth-koa#readme",
   "devDependencies": {
     "@jessety/eslint-config": "^1.0.4",
     "eslint": "^5.16.0"
@@ -16,6 +24,6 @@
   "dependencies": {
     "koa-bodyparser": "^4.2.1",
     "koa-compose": "^4.1.0",
-    "simple-hmac-auth": "^2.2.0"
+    "simple-hmac-auth": "^3.0.0"
   }
 }
