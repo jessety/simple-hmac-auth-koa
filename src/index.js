@@ -10,7 +10,7 @@ const bodyParser = require('koa-bodyparser');
 const compose = require('koa-compose');
 const SimpleHMACAuth = require('simple-hmac-auth');
 
-// Extend the SimpleHMACAuth class to add a Koa middleware function
+// Extend the SimpleHMACAuth class to add a function which returns Koa middleware
 class SimpleHMACAuthKoa extends SimpleHMACAuth.Server {
 
   /**
@@ -20,7 +20,7 @@ class SimpleHMACAuthKoa extends SimpleHMACAuth.Server {
    */
   middleware(options) {
 
-    // Middleware function that authenticates the request
+    // Construct a middleware function that authenticates the request
     const authMiddleware = async (ctx, next) => {
 
       try {
@@ -29,15 +29,19 @@ class SimpleHMACAuthKoa extends SimpleHMACAuth.Server {
 
       } catch (error) {
 
+        // If an onRejected function is implemeted, let it handle the error
         if (typeof this.onRejected === 'function') {
-          this.onRejected(ctx, next);
+
+          return this.onRejected(ctx, next, error);
         }
 
-        // throw error;
-        ctx.throw(401, error.message);
+        // Otherwise, throw the error
+        ctx.throw(error.status || 401, error.message);
+
         return;
       }
 
+      // If the onAccepted function is implemented, run it
       if (typeof this.onAccepted === 'function') {
         this.onAccepted(ctx, next);
       }
@@ -45,7 +49,7 @@ class SimpleHMACAuthKoa extends SimpleHMACAuth.Server {
       await next();
     };
 
-    // Compose koa-bodyparser and auth middleware so that the raw body is available
+    // Compose koa-bodyparser and auth middleware so that the raw body is available to the latter
     return compose([bodyParser(options.bodyParser), authMiddleware]);
   }
 }
@@ -64,6 +68,13 @@ module.exports = function(options) {
 
   if (typeof options.bodyParser !== 'object') {
     options.bodyParser = {};
+  }
+
+  // The koa body parsed middleware needs to be told to parse text or xml input
+  // https://github.com/koajs/bodyparser/issues/73
+  // Enable all body types it supports
+  if (!Array.isArray(options.bodyParser.enableTypes)) {
+    options.bodyParser.enableTypes = ['json', 'form', 'text'];
   }
 
   if (typeof options.secretForKey !== 'function') {
