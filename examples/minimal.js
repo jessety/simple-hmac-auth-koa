@@ -7,45 +7,45 @@
 'use strict';
 
 const Koa = require('koa');
+const logger = require('koa-logger');
 const Router = require('koa-router');
 
 // const auth = require('simple-hmac-auth-koa');
 const auth = require('../src/index.js');
 
+// Configuration
+
+const port = 8000;
+
+const secretForAPIKey = {
+  API_KEY: 'SECRET',
+  API_KEY_TWO: 'SECRET_TWO',
+  API_KEY_THREE: 'SECRET_THREE'
+};
+
+// Create app and log requests
+
 const app = new Koa();
 
-// Handle errors
-
-app.use(async (ctx, next) => {
-  try {
-    await next();
-  } catch (err) {
-    ctx.status = err.status || 500;
-    ctx.body = err.message;
-  }
-});
+app.use(logger());
 
 // Enable authentication
 
 app.use(auth({
-  secretForKey: apiKey => {
-    return new Promise((resolve, reject) => {
-      resolve('SECRET');
-    });
-  }
+  secretForKey: async apiKey => secretForAPIKey[apiKey]
 }));
 
 // Route incoming requests
 
 const router = new Router();
 
-router.all('*', ctx => {
-  ctx.body = 'Request successful.';
-});
+router.all('*', ctx => ctx.body = 'Request successful.');
 
 app.use(router.routes());
 app.use(router.allowedMethods());
 
 // Listen
 
-app.listen(8000);
+app.listen(port);
+
+console.log(`Listening on port ${port}`);

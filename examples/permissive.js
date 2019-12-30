@@ -1,7 +1,8 @@
 //
 //  Simple HMAC Auth - Koa
-//  /example/index.js
-//  Created by Jesse T Youngblood on 5/31/19 at 14:55
+//  /example/permissive.js
+//  Allow requests through even if they don't correctly authenticate, but update ctx with that fact either way
+//  Created by Jesse T Youngblood on 12/30/19 at 17:40
 //
 
 'use strict';
@@ -27,22 +28,6 @@ const app = new Koa();
 // Log incoming requests
 
 app.use(logger());
-
-// Handle errors
-
-app.use(async (ctx, next) => {
-
-  try {
-
-    await next();
-
-  } catch (error) {
-
-    ctx.status = error.status || 500;
-    ctx.body = error.message;
-    ctx.app.emit('error', error, ctx);
-  }
-});
 
 // Enable simple-hmac-auth
 
@@ -71,13 +56,17 @@ app.use(auth({
   // This is optional
   onAccepted: ctx => {
     console.log('Authentication accepted.');
+    ctx.authenticated = true;
   },
 
   // This is also optional, but MUST handle the error if implemented.
   // If not implemented, middlware will throw the error itself.
-  onRejected: (ctx, next, error) => {
-    console.log('Authentication rejected: ', error);
-    ctx.throw(401, error.message);
+  onRejected: async (ctx, next, error) => {
+
+    console.log(`Authentication rejected: "${error.message}" Allowing..`);
+
+    ctx.authenticated = false;
+    await next();
   }
 }));
 
@@ -85,12 +74,8 @@ app.use(auth({
 
 const router = new Router();
 
-router.get('*', ctx => {
-  ctx.body = 'GET successful.';
-});
-
-router.post('*', ctx => {
-  ctx.body = 'POST successful.';
+router.all('*', ctx => {
+  ctx.body = `Request successful. Authenticated: ${ctx.authenticated}`;
 });
 
 app.use(router.routes());
