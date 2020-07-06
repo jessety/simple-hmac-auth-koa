@@ -8,11 +8,11 @@
 'use strict';
 
 const Koa = require('koa');
-const logger = require('koa-logger');
 const Router = require('koa-router');
+// const logger = require('koa-logger');
 
 // const auth = require('simple-hmac-auth-koa');
-const auth = require('../src/index.js');
+const auth = require('../');
 
 const settings = {
   port: 8000,
@@ -26,8 +26,7 @@ const settings = {
 const app = new Koa();
 
 // Log incoming requests
-
-app.use(logger());
+// app.use(logger());
 
 // Enable simple-hmac-auth
 
@@ -74,12 +73,11 @@ app.use(auth({
 
 const router = new Router();
 
-router.all('*', ctx => {
+router.all('/', ctx => {
   ctx.body = `Request successful. Authenticated: ${ctx.authenticated}`;
 });
 
-app.use(router.routes());
-app.use(router.allowedMethods());
+app.use(router.routes(), router.allowedMethods());
 
 app.listen(settings.port);
 

@@ -12,17 +12,26 @@
   },
   "license": "MIT",
   "author": "Jesse Youngblood",
-  "main": "src/index.js",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "example": "example",
+    "test": "test"
+  },
   "scripts": {
-    "lint": "npx eslint ."
+    "lint": "eslint .",
+    "test": "jest"
   },
   "dependencies": {
-    "koa-bodyparser": "^4.2.1",
+    "koa-bodyparser": "^4.3.0",
     "koa-compose": "^4.1.0",
-    "simple-hmac-auth": "^3.2.2"
+    "simple-hmac-auth": "^3.3.1"
   },
   "devDependencies": {
-    "@jessety/eslint-config": "^1.0.4",
-    "eslint": "^5.16.0"
+    "@jessety/eslint-config": "^1.0.6",
+    "eslint": "^7.4.0",
+    "jest": "^26.1.0",
+    "koa": "^2.13.0",
+    "koa-router": "^9.1.0"
   }
 }

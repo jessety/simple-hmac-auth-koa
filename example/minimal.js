@@ -7,11 +7,10 @@
 'use strict';
 
 const Koa = require('koa');
-const logger = require('koa-logger');
 const Router = require('koa-router');
 
 // const auth = require('simple-hmac-auth-koa');
-const auth = require('../src/index.js');
+const auth = require('../');
 
 // Configuration
 
@@ -27,8 +26,6 @@ const secretForAPIKey = {
 
 const app = new Koa();
 
-app.use(logger());
-
 // Enable authentication
 
 app.use(auth({
@@ -39,10 +36,9 @@ app.use(auth({
 
 const router = new Router();
 
-router.all('*', ctx => ctx.body = 'Request successful.');
+router.all('/', ctx => ctx.body = 'Request successful.');
 
-app.use(router.routes());
-app.use(router.allowedMethods());
+app.use(router.routes(), router.allowedMethods());
 
 // Listen
 

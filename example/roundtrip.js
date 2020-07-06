@@ -7,11 +7,11 @@
 'use strict';
 
 const Koa = require('koa');
-const logger = require('koa-logger');
 const Router = require('koa-router');
+// const logger = require('koa-logger');
 
 // const auth = require('simple-hmac-auth-koa');
-const auth = require('../src/index.js');
+const auth = require('../');
 
 const { Client } = require('simple-hmac-auth');
 
@@ -24,7 +24,7 @@ const settings = {
 const app = new Koa();
 
 // Log incoming requests
-app.use(logger());
+// app.use(logger());
 
 // Handle errors
 app.use(async (ctx, next) => {
@@ -64,10 +64,9 @@ app.use(auth({
 
 const router = new Router();
 
-router.post('*', ctx => ctx.body = 'POST successful.');
+router.post('/items/', ctx => ctx.body = 'POST successful.');
 
-app.use(router.routes());
-app.use(router.allowedMethods());
+app.use(router.routes(), router.allowedMethods());
 
 const server = app.listen(settings.port, () => {
 

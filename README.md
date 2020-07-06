@@ -1,9 +1,14 @@
 # simple-hmac-auth-koa
+
 Koa middleware for creating APIs that implement [simple-hmac-auth](https://github.com/jessety/simple-hmac-auth).
+
+[![ci](https://github.com/jessety/simple-hmac-auth-koa/workflows/ci/badge.svg)](https://github.com/jessety/simple-hmac-auth-koa/actions)
+[![npm](https://img.shields.io/npm/v/simple-hmac-auth-koa.svg)](https://www.npmjs.com/package/simple-hmac-auth-koa)
+[![license](https://img.shields.io/github/license/jessety/simple-hmac-auth-koa.svg)](https://github.com/jessety/simple-hmac-auth-koa/blob/master/LICENSE)
 
 ## Usage
 
-Instansiating the middleware requires a function that can return a secret for a given API key.
+Instantiating the middleware requires a function that can return a secret for a given API key.
 
 If a request fails authentication, it will throw a `401` error.
 
@@ -30,7 +35,7 @@ app.use(auth({
 
 const router = new Router();
 
-router.all('*', ctx => {
+router.all('/', ctx => {
   ctx.body = 'Request successful.';
 });
 

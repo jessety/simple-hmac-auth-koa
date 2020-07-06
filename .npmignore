@@ -1,1 +1,8 @@
-examples/
+example
+test
+coverage
+.github
+.gitignore
+.eslintrc.json
+.eslintignore
+.editorconfig
