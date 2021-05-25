@@ -19,8 +19,11 @@
     "test": "test"
   },
   "scripts": {
-    "lint": "eslint .",
-    "test": "jest"
+    "build": "npm run clean && tsc",
+    "clean": "rimraf lib",
+    "format": "sort-package-json && eslint --fix .",
+    "lint": "eslint . && editorconfig-checker .",
+    "test": "npm run build && jest"
   },
   "dependencies": {
     "koa-bodyparser": "^4.3.0",
@@ -29,9 +32,23 @@
   },
   "devDependencies": {
     "@jessety/eslint-config": "^1.0.6",
-    "eslint": "^7.4.0",
-    "jest": "^26.1.0",
+    "@types/express": "^4.17.11",
+    "@types/jest": "^26.0.23",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-compose": "^3.2.5",
+    "@types/koa-router": "^7.4.2",
+    "@types/node": "^15.6.0",
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
+    "editorconfig-checker": "^4.0.2",
+    "eslint": "^7.27.0",
+    "express": "^4.17.1",
+    "jest": "^26.5.3",
     "koa": "^2.13.0",
-    "koa-router": "^10.0.0"
+    "koa-router": "^10.0.0",
+    "rimraf": "^3.0.2",
+    "sort-package-json": "^1.50.0",
+    "ts-jest": "^26.5.6",
+    "typescript": "^4.2.4"
   }
 }

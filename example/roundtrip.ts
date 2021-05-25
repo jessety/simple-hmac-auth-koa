@@ -4,16 +4,14 @@
 //  Created by Jesse T Youngblood on 12/19/19 at 14:44
 //
 
-'use strict';
-
-const Koa = require('koa');
-const Router = require('koa-router');
+import Koa from 'koa';
+import Router from 'koa-router';
 // const logger = require('koa-logger');
 
 // const auth = require('simple-hmac-auth-koa');
-const auth = require('../');
+import auth from '../';
 
-const { Client } = require('simple-hmac-auth');
+import { Client } from 'simple-hmac-auth';
 
 const settings = {
   port: 8000,
@@ -45,7 +43,7 @@ app.use(async (ctx, next) => {
 app.use(auth({
 
   // This is required
-  secretForKey: async apiKey => {
+  secretForKey: async (apiKey: string) => {
     return settings.secret;
   },
 
@@ -66,7 +64,8 @@ const router = new Router();
 
 router.post('/items/', ctx => ctx.body = 'POST successful.');
 
-app.use(router.routes(), router.allowedMethods());
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 const server = app.listen(settings.port, () => {
 
