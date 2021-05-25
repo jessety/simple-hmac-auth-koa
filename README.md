@@ -15,9 +15,9 @@ If a request fails authentication, it will throw a `401` error.
 The `simple-hmac-auth` authentication protocol requires the raw body of a request to validate it. `simple-hmac-auth-koa` leverages `koa-bodyparser` to parse body data. However, because the body parser only supports `json`, `form` and `text` input, this project is currently limited to those inputs as well.
 
 ```javascript
-const Koa = require('koa');
-const Router = require('koa-router');
-const auth = require('simple-hmac-auth-koa');
+import Koa from 'koa';
+import Router from 'koa-router';
+import auth from 'simple-hmac-auth-koa';
 ```
 
 ```javascript
@@ -27,6 +27,7 @@ const app = new Koa();
 
 app.use(auth({
   secretForKey: async apiKey => {
+    // Return the correct secret for the given API key
     return 'SECRET';
   }
 }));
