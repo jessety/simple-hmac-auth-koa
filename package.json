@@ -18,6 +18,9 @@
     "example": "example",
     "test": "test"
   },
+  "files": [
+    "/lib"
+  ],
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rimraf lib",
