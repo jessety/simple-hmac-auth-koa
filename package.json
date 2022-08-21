@@ -1,6 +1,6 @@
 {
   "name": "simple-hmac-auth-koa",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Koa middleware that implements simple-hmac-auth",
   "homepage": "https://github.com/jessety/simple-hmac-auth-koa#readme",
   "bugs": {
