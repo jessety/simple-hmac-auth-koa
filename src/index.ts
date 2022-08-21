@@ -47,9 +47,9 @@ class SimpleHMACAuthKoa extends Server {
 
         await this.authenticate(ctx.req, ctx.request.rawBody);
 
-      } catch (error) {
+      } catch (error: any) {
 
-        // If an onRejected function is implemeted, let it handle the error
+        // If an onRejected function is implemented, let it handle the error
         if (this.onRejected !== undefined && typeof this.onRejected === 'function') {
 
           return this.onRejected(ctx, next, error);
